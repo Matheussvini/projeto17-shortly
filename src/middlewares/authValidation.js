@@ -1,9 +1,9 @@
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import { connnectionDB } from "../database/db";
+import { connnectionDB } from "../database/db.js";
 dotenv.config();
 
-export async function authValidation(req, res, next) {
+export default async function authValidation(req, res, next) {
   const { authorization } = req.headers;
   const token = authorization?.replace("Bearer ", "");
   const secretKey = process.env.JWT_SECRET;
