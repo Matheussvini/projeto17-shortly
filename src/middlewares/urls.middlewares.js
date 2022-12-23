@@ -58,7 +58,7 @@ export async function validShortlink(req, res, next){
   
   `, [shortUrl]);
   const data = rows[0];
-  if(!data) return res.status(404).send({ message: "Não há nenhuma URL com esse ID!" })
+  if(!data) return res.status(404).send({ message: "Não há nenhuma URL com esse shortUrl!" })
 
   res.locals.url = data;
   next();
