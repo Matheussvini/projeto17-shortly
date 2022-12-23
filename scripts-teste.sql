@@ -2,12 +2,7 @@ CREATE DATABASE shortlydb
 
 
 
-CREATE TABLE users(
-	"id" SERIAL NOT NULL PRIMARY KEY,
-	"name" varchar(60) NOT NULL,
-	"email" TEXT NOT NULL UNIQUE,
-	"password" TEXT NOT NULL
-);
+ 
 
 
 
@@ -19,11 +14,11 @@ CREATE TABLE urls(
 	"visits" integer NOT NULL DEFAULT 0
 );
 
-INSERT INTO urls (url, "shortUrl", user_id, visits)
-VALUES ('http:/globo.com', 'aaaa', 1, 5);
+INSERT INTO urls (url, "shortUrl", user_id)
+VALUES ('http:/globo.com', 'hhhhh', 8);
 
 INSERT INTO users (name, email, password)
-VALUES ('João', 'joçao@gmail.com', '12345');
+VALUES ('caio', 'caio2@gmail.com', '1234');
 
 SELECT * FROM urls;
 SELECT * FROM users;
