@@ -8,6 +8,7 @@ export async function validShemaShortLink(req, res, next) {
 
   const { url } = req.body;
   const { id } = res.locals.user;
+  console.log(id)
   const shortUrl = nanoid(10);
 
   res.locals.shorten = {
@@ -57,13 +58,10 @@ export async function validShortlink(req, res, next){
     WHERE "shortUrl" = $1
   
   `, [shortUrl]);
-
   const data = rows[0];
-
   if(!data) return res.status(404).send({ message: "Não há nenhuma URL com esse ID!" })
 
   res.locals.url = data;
-
   next();
 
 }

@@ -15,7 +15,7 @@ export async function createUser(req, res) {
       [name, email, passwordHash]
     );
     res.sendStatus(201);
-  } catch (error) {
+  } catch (err) {
     res.status(500).send(err.message);
   }
 }
@@ -44,13 +44,13 @@ export async function login(req, res) {
         message: "Senha incorreta, verifique sua senha e tente novamente.",
       });
     }
-  } catch (error) {
+  } catch (err) {
     res.status(500).send(err.message);
   }
 }
 
 export async function findById(req, res) {
-  const { id: idLocal } = req.locals.user;
+  const user = res.locals.user;
 
   try {
     const query1 = await connnectionDB.query(
@@ -58,14 +58,13 @@ export async function findById(req, res) {
                 users.id,
                 users.name,
                 SUM(urls.visits) AS "visitCount"
-
             FROM users
             JOIN urls
             ON users.id = urls.user_id
             WHERE urls.user_id = $1
             GROUP BY users.id;
             `,
-      [idLocal]
+      [user.id]
     );
 
     const query2 = await connnectionDB.query(
@@ -80,7 +79,7 @@ export async function findById(req, res) {
         WHERE urls.user_id = $1
         GROUP BY urls.id
         `,
-      [idLocal]
+      [user.id]
     );
 
     const {id, name,visitCount } = query1.rows[0];
@@ -96,7 +95,7 @@ export async function findById(req, res) {
 
 
 
-  } catch (error) {
+  } catch (err) {
     res.status(500).send(err.message);
   }
 }

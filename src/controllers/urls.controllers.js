@@ -13,7 +13,7 @@ export async function createShortLink(req, res) {
     );
 
     res.status(201).send({ shortUrl });
-  } catch (error) {
+  } catch (err) {
     res.status(500).send(err.message);
   }
 }
@@ -30,7 +30,7 @@ export async function deleteShortLink(req, res) {
     );
 
     res.status(204).send("Url excluída com sucesso!");
-  } catch (error) {
+  } catch (err) {
     res.status(500).send(err.message);
   }
 }
@@ -59,27 +59,27 @@ export async function findById(req, res) {
       shortUrl: data.shortUrl,
       url: data.url,
     });
-  } catch (error) {
+  } catch (err) {
     res.status(500).send(err.message);
   }
 }
 
 export async function openShortLink(req, res) {
-  const { url } = req.params;
+  const { url } = res.locals;
+  console.log("open", url);
 
   try {
     await connnectionDB.query(
       `
             UPDATE urls
-            SET visits = visits + 1
-            WHERE id = $1
+            SET visits = $1
+            WHERE id = $2
         `,
-      [url.id]
+      [url.visits + 1, url.id]
     );
 
-    res.redirect(url.shortUrl);
-
-  } catch (error) {
+    return res.redirect(url.shortUrl);
+  } catch (err) {
     res.status(500).send(err.message);
   }
 }
