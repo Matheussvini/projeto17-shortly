@@ -5,5 +5,5 @@ dotenv.config();
 const { Pool } = pg;
 
 export const connnectionDB = new Pool({
-    connnectionString: process.env.DATABASE_URL,
+    connectionString: process.env.DATABASE_URL,
 });

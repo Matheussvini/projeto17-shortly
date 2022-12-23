@@ -18,13 +18,11 @@ export async function validShemaSignUp(req, res, next) {
   if (user.password !== user.confirmPassword) {
     return res.status(409).send({ message: "Senhas não conferem!" });
   }
-  console.log("antes", user.email);
 
   const result = await connnectionDB.query(
     "SELECT * FROM users WHERE email = $1",
     [user.email]
   );
-  console.log("depois", result);
   if (result.rowCount !== 0) {
     return res.status(409).send({
       message:
@@ -42,14 +40,10 @@ export async function validShemaSignIn(req, res, next) {
 
   const user = req.body;
 
-  console.log("antes da consulta")
-
   const result = await connnectionDB.query(
     "SELECT * FROM users WHERE email = $1",
     [user.email]
   );
-
-  console.log("depois da consulta", result)
 
   if (result.rowCount === 0) {
     return res.status(409).send({
