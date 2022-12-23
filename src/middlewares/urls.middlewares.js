@@ -8,7 +8,6 @@ export async function validShemaShortLink(req, res, next) {
 
   const { url } = req.body;
   const { id } = res.locals.user;
-  console.log(id)
   const shortUrl = nanoid(10);
 
   res.locals.shorten = {
