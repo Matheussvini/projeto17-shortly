@@ -49,7 +49,7 @@ export async function findById(req, res) {
     );
     const data = rows[0];
 
-    if (!!data)
+    if (!data)
       return res
         .status(404)
         .send({ message: "Não há nenhuma URL com esse ID!" });
@@ -66,7 +66,6 @@ export async function findById(req, res) {
 
 export async function openShortLink(req, res) {
   const { url } = res.locals;
-  console.log("open", url);
 
   try {
     await connnectionDB.query(
@@ -78,7 +77,7 @@ export async function openShortLink(req, res) {
       [url.visits + 1, url.id]
     );
 
-    return res.redirect(url.shortUrl);
+    return res.redirect(200, url.url);
   } catch (err) {
     res.status(500).send(err.message);
   }
