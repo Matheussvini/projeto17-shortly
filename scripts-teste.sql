@@ -11,7 +11,8 @@ CREATE TABLE urls(
 	"url" TEXT NOT NULL,
 	"shortUrl" TEXT UNIQUE,
 	"user_id" integer NOT NULL REFERENCES users(id),
-	"visits" integer NOT NULL DEFAULT 0
+	"visits" integer NOT NULL DEFAULT 0,
+	"createdAt" TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW()
 );
 
 INSERT INTO urls (url, "shortUrl", user_id)
